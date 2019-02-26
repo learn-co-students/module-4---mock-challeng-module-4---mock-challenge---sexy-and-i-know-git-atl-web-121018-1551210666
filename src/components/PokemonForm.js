@@ -13,6 +13,24 @@ class PokemonForm extends React.Component {
     }
   }
 
+  handleSubmit = () => {
+    fetch('http://localhost:3000/pokemon', {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      name: this.state.name,
+      hp: this.state.hp,
+      frontUrl: this.state.frontUrl,
+      backUrl: this.state.backUrl
+    })
+    })
+
+  }
+
+
   render() {
     return (
       <div>
