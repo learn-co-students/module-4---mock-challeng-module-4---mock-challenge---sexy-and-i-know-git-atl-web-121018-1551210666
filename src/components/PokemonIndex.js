@@ -9,8 +9,6 @@ class PokemonPage extends React.Component {
     pokemon: []
   }
 
-  // URL = 'http://localhost:3000/pokemon'
-
   componentDidMount() {
     fetch('http://localhost:3000/pokemon').then(res => res.json()).then(pokemon => {
       this.setState({
@@ -19,15 +17,15 @@ class PokemonPage extends React.Component {
     })
   }
 
-  //filter is one way, can fix it by fetching again
-
   search = (event) => {
     const filterText = event.target.value
 
-    const newPokemon = this.state.pokemon.filter(poke => poke.name.includes(filterText))
+    fetch('http://localhost:3000/pokemon').then(res => res.json()).then(pokemon => {
+      const newPokemon = pokemon.filter(poke => poke.name.includes(filterText))
 
-    this.setState({
-      pokemon: newPokemon
+      this.setState({
+        pokemon: newPokemon
+      })
     })
   }
 
