@@ -12,7 +12,8 @@ class PokemonPage extends React.Component {
 
     this.state = {
       pokemon: [],
-      searchEntry: ''
+      searchEntry: '',
+      filteredPokemon: []
     }
   }
 
@@ -22,14 +23,19 @@ class PokemonPage extends React.Component {
     .then(pokemon => {
       console.log(pokemon)
       this.setState({
-        pokemon: pokemon
+        pokemon: pokemon,
+        filteredPokemon: pokemon
       })
     })
   } 
 
   handleSearch = (event, {value}) => {
+    const filteredPokemon = this.state.pokemon.filter(poke =>
+      poke.name.includes(value))
+
     this.setState({
-      searchEntry: value
+      searchEntry: value,
+      filteredPokemon: filteredPokemon
     })
   }
 
@@ -40,16 +46,13 @@ class PokemonPage extends React.Component {
   }
 
   render() {
-    const filteredPokemon = this.state.pokemon.filter(poke =>
-      poke.name.includes(this.state.searchEntry))
-
     return (
       <div>
         <h1>Pokemon Searcher</h1>
         <br />
         <Search onSearchChange={_.debounce(this.handleSearch, 500)} showNoResults={false} />
         <br />
-        <PokemonCollection pokemon={filteredPokemon} />
+        <PokemonCollection pokemon={this.state.filteredPokemon} />
         <br />
         <PokemonForm addPokemon={this.addPokemon} api={API}/>
       </div>

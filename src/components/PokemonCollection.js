@@ -8,7 +8,7 @@ const PokemonCollection = (props) => {
       key={poke.id}
       name={poke.name}
       sprites={poke.sprites}
-      hp = {poke.stats[poke.stats.length - 1]} />)
+      hp = {poke.stats.find(stat => stat.name === 'hp')} />)
 
     return (
       <div>

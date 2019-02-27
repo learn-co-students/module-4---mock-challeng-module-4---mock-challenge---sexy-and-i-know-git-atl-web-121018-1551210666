@@ -21,6 +21,7 @@ class PokemonForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
+    
     fetch(this.props.api, {
       method: 'POST',
       headers: {
