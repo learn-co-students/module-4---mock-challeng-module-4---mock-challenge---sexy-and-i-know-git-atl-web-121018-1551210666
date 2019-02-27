@@ -29,7 +29,26 @@ class PokemonPage extends React.Component {
     })
   }
 
+  addPoke = (poke) => {
+    const newPokemon = [...this.state.pokemon, poke]
+    this.setState({
+      pokemon: newPokemon
+    })
+  }
 
+  handleSubmit = (info) => {
+    fetch('http://localhost:3000/pokemon', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: info.name,
+        stats: [{name: 'hp', value: info.hp}],
+        sprites: {front: info.frontUrl, back: info.backUrl}
+      })
+    }).then(res => res.json()).then(this.addPoke)
+  }
 
   render() {
     return (
@@ -38,9 +57,9 @@ class PokemonPage extends React.Component {
         <br />
         <Search onSearchChange={this.search} showNoResults={false} />
         <br />
-        <PokemonCollection pokemon={this.state.pokemon}/>
+        <PokemonCollection pokemon={this.state.pokemon} />
         <br />
-        <PokemonForm />
+        <PokemonForm handleSubmit={this.handleSubmit} />
       </div>
     )
   }
